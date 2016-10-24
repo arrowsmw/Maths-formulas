@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import java.math.BigDecimal;
 import java.lang.Math;
 import static java.math.BigDecimal.ROUND_HALF_UP;
+import static java.math.BigDecimal.ROUND_DOWN;
 import java.math.MathContext;
 
 
@@ -100,10 +101,10 @@ public class Pi {
         
         Scanner numInput = new Scanner(System.in);
         
-        //System.out.println("Enter the number of decimal places you want to calculate Pi to (NOT HIGHER THAN 2250): ");
-        long input = 2250;//numInput.nextLong();
+        System.out.println("Enter the number of decimal places you want to calculate Pi to (NOT HIGHER THAN 2250): ");
+        long input = numInput.nextLong();
         int val = (int) input;
-        MathContext mc = new MathContext(val);
+        MathContext mc = new MathContext(val+1);
         
         BigDecimal sum = new BigDecimal("0",mc);
         BigDecimal partOne = new BigDecimal("12",mc);
@@ -121,13 +122,19 @@ public class Pi {
         partThree = partThree.add(partOne);
         partThree = partThree.divide(partTwo,mc);
         //System.out.println("Part three is: " + partThree);
-        sum = findSum(input/13, sum);
+        sum = findSum((input+1)/13, sum);
         //System.out.println("The sum is: " + sum);
         partThree = partThree.multiply(sum,mc);
         
         BigDecimal Pi = new BigDecimal("1",mc);
         
         Pi = Pi.divide(partThree, mc);
+        Pi.setScale(10, ROUND_DOWN);
+        
+        
+        
+        
+        
         
         System.out.println("The value of Pi to " + input + " decimal places is: " + Pi);
         
